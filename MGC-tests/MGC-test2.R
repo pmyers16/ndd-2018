@@ -36,41 +36,44 @@ plot_mtx <- function(Dx, main.title="Local Correlation Map", xlab.title="# X Nei
 }
 
 set.seed(12345)
-dat <- read.csv("KHop_Data.csv", header = TRUE)
-dat <- array(as.numeric(unlist(dat)), dim=c(97,97))
-dat <- dat[,-1]
-maxval <- 0
-Xmax <- 0
-Ymax <- 0
-X <- 1
+dat <- read.csv("hbn_vertexstats.csv", header = TRUE)
+#dat <- array(as.numeric(unlist(dat)), dim=c(91,291))
+Y <- dat[,2]
+print(Y)
+X1 <- dat[,c(4:51)]
+X2 <- dat[,c(52:99)]
+X3 <- dat[,c(100:147)]
+X4 <- dat[,c(148:195)]
+X5 <- dat[,c(196:243)]
+X6 <- dat[,c(244:291)]
 
-zeromat <- matrix(1:96, nrow = 96, ncol=6)
+zeromat <- matrix(1:6, nrow = 6, ncol=6)
 mgctests <- array(0L, dim(zeromat))
-for (Y in 2:97) {
-  Xdat <- dat[X,]
-  YDat <- dat[Y,]
+
+count <- 1
+
+Xlist <- list(X1, X2, X3, X4, X5, X6)
+for(i in Xlist){
+  Xdat <- array(as.numeric(unlist(i)), dim=c(91,48))
+  YDat <- array(as.numeric(unlist(Y)), dim=c(91,1))
   res <- mgc.test(Xdat,YDat, rep=20)
   val <- res$statMGC
   p_val <- res$pMGC
   scale <- res$optimalScale
-  print(scale)
-  plot_mtx(res$localCorr, main.title="Local Correlation Map")
-  if ( val > maxval){
-    maxval <- val
-    Xmax <- X
-    Ymax <- Y
-  }
-  mgctests[Y-1,1] = val
-  mgctests[Y-1,2] = X
-  mgctests[Y-1,3] = Y
-  mgctests[Y-1,4] = p_val
-  mgctests[Y-1,5] = scale$x
-  mgctests[Y-1,6] = scale$y
+  
+  mgctests[count,1] = val
+  mgctests[count,2] = 'Xdat'
+  mgctests[count,3] = 'YDat'
+  mgctests[count,4] = p_val
+  mgctests[count,5] = scale$x
+  mgctests[count,6] = scale$y
+  count <- count +1
 }
-#Xdat = dat[1,]
-#YDat = dat[2,]
-#res <- mgc.test(Xdat, YDat, rep=20)
-#maxval = res$statMGC
 
-print(mgctests)
-write.csv(mgctests, file = 'mgc-test-stats.csv')
+Xdat <- array(as.numeric(unlist(X1)), dim=c(91,48))
+YDat <- array(as.numeric(unlist(Y)), dim=c(91,1))
+res <- mgc.test(Xdat,YDat, rep=20)
+corr_mat <- res$localCorr
+
+write.csv(mgctests, file = 'mgc-test-stats_vertex.csv')
+write.csv(corr_mat, file = 'Example_vertex_corr.csv')
