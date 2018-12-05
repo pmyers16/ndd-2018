@@ -40,6 +40,8 @@ dat <- read.csv("hbn_vertexstats.csv", header = TRUE)
 #dat <- array(as.numeric(unlist(dat)), dim=c(91,291))
 Y1 <- dat[,2]
 Y2 <- dat[,3]
+Y2 <- Y2 > 10.5
+Y2 <- as.numeric(Y2)
 print(Y1)
 #X1 <- dat[,c(4:51)]
 #X2 <- dat[,c(52:99)]
@@ -71,14 +73,14 @@ for(i in 4:291){
   mgctests[count,6] = scale$y
   count <- count +1
 }
-
+dat <- read.csv("hbn_vertexstats.csv", header = TRUE)
 Xdat <- array(as.numeric(unlist(dat[,283])), dim=c(91,1))
 YDat <- array(as.numeric(unlist(Y1)), dim=c(91,1))
 res <- mgc.test(Xdat,YDat, rep=20)
 corr_mat <- res$localCorr
 write.csv(corr_mat, file = 'Example_vertex_corr.csv')
 
-write.csv(mgctests, file = 'mgc-test-stats_gender.csv')
+write.csv(mgctests, file = 'mgc-test-stats_gender_vertex.csv')
 
 
 
@@ -106,6 +108,6 @@ for(i in 4:291){
   count <- count +1
 }
 
-write.csv(mgctests, file = 'mgc-test-stats_age.csv')
+write.csv(mgctests, file = 'mgc-test-stats_age_vertex.csv')
 
 #
