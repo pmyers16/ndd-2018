@@ -72,10 +72,11 @@ for(i in 4:291){
   count <- count +1
 }
 
-#Xdat <- array(as.numeric(unlist(X1)), dim=c(91,48))
-#YDat <- array(as.numeric(unlist(Y)), dim=c(91,1))
-#res <- mgc.test(Xdat,YDat, rep=20)
-#corr_mat <- res$localCorr
+Xdat <- array(as.numeric(unlist(dat[,283])), dim=c(91,1))
+YDat <- array(as.numeric(unlist(Y1)), dim=c(91,1))
+res <- mgc.test(Xdat,YDat, rep=20)
+corr_mat <- res$localCorr
+write.csv(corr_mat, file = 'Example_vertex_corr.csv')
 
 write.csv(mgctests, file = 'mgc-test-stats_gender.csv')
 
@@ -107,4 +108,4 @@ for(i in 4:291){
 
 write.csv(mgctests, file = 'mgc-test-stats_age.csv')
 
-#write.csv(corr_mat, file = 'Example_vertex_corr.csv')
+#
