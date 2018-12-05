@@ -73,11 +73,11 @@ for(i in Xlist){
   count <- count +1
 }
 
-#Xdat <- array(as.numeric(unlist(dat[,283])), dim=c(91,1))
-#YDat <- array(as.numeric(unlist(Y1)), dim=c(91,1))
-#res <- mgc.test(Xdat,YDat, rep=20)
-#corr_mat <- res$localCorr
-#write.csv(corr_mat, file = 'Example_vertex_corr.csv')
+Xdat <- array(as.numeric(unlist(X1)), dim=c(91,1))
+YDat <- array(as.numeric(unlist(Y1)), dim=c(91,1))
+res <- mgc.test(Xdat,YDat, rep=20)
+corr_mat <- res$localCorr
+write.csv(corr_mat, file = 'Gender_feature_corr.csv')
 
 write.csv(mgctests, file = 'mgc-test-stats_gender_feature.csv')
 
@@ -105,6 +105,13 @@ for(i in Xlist){
   mgctests[count,6] = scale$y
   count <- count +1
 }
+
+Xdat <- array(as.numeric(unlist(X4)), dim=c(91,1))
+YDat <- array(as.numeric(unlist(Y2)), dim=c(91,1))
+res <- mgc.test(Xdat,YDat, rep=20)
+corr_mat <- res$localCorr
+write.csv(corr_mat, file = 'Age_feature_corr.csv')
+
 
 write.csv(mgctests, file = 'mgc-test-stats_age_feature.csv')
 
