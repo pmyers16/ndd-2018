@@ -3,7 +3,6 @@ import sys
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 from subprocess import check_output, call
-from Cython.Build import cythonize
 from sys import platform
 import numpy
 
@@ -52,6 +51,4 @@ setup(
     ],
     include_dirs=[numpy.get_include()],
     packages=find_packages()
-)
-~                                                                                                                     
-~                            
+) 
